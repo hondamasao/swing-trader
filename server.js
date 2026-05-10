@@ -23,7 +23,7 @@ async function askClaude(ticker, price, time) {
   const response = await axios.post(
     "https://api.anthropic.com/v1/messages",
     {
-      model: "claude-sonnet-4-20250514",
+      model: "claude-haiku-4-5-20251001",
       max_tokens: 300,
       messages: [{ role: "user", content: `A swing trade setup just fired on ${ticker} at $${price}. All 5 conditions are confirmed: uptrend above 21 EMA, 5-15% pullback, near EMA support, RSI 35-50, volume drying up. In 3-4 sentences: is this a valid entry, where is the stop (2-3% below entry), and what is the target?` }],
     },
