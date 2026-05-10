@@ -33,8 +33,24 @@ async function askClaude(ticker, price, time) {
 }
 
 async function sendToDiscord(ticker, price, analysis) {
+  const priceNum = parseFloat(price);
+  const stopLoss = (priceNum * 0.97).toFixed(2);
+  const target = (priceNum * 1.06).toFixed(2);
+  const chartUrl = `https://www.tradingview.com/chart/?symbol=${ticker}`;
+
   await axios.post(process.env.DISCORD_WEBHOOK_URL, {
-    embeds: [{ title: `📈 Setup Alert: ${ticker}`, color: 0x00c853, fields: [{ name: "Price", value: `$${price}`, inline: true }, { name: "Claude's Analysis", value: analysis }], timestamp: new Date().toISOString() }]
+    embeds: [{
+      title: `📈 Setup Alert: ${ticker}`,
+      color: 0x00c853,
+      fields: [
+        { name: "Price", value: `$${priceNum.toFixed(2)}`, inline: true },
+        { name: "Stop Loss", value: `$${stopLoss}`, inline: true },
+        { name: "Target", value: `$${target}`, inline: true },
+        { name: "Claude's Analysis", value: analysis },
+        { name: "Chart", value: `[Open in TradingView](${chartUrl})` }
+      ],
+      timestamp: new Date().toISOString()
+    }]
   });
 }
 
