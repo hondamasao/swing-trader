@@ -14,7 +14,7 @@ app.post("/webhook", async (req, res) => {
     await sendToDiscord(ticker, price, analysis);
     res.status(200).json({ success: true });
   } catch (err) {
-    console.error("Error:", err.message);
+    console.error("Error:", err.message, err.response?.data);
     res.status(500).json({ error: err.message });
   }
 });
